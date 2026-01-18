@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Car Booking</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+  --black:#000;
+  --white:#fff;
+  --gray:#e5e5e5;
+  --dark:#222;
+  --radius:16px;
+  --transition:0.3s ease;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+  background:var(--white);
+  color:var(--black);
+  overflow-x:hidden;
+}
+
+/* ================= HEADER ================= */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 32px;
+  border-bottom:1px solid #ddd;
+}
+
+.logo{
+  background:var(--gray);
+  padding:6px 14px;
+  font-weight:bold;
+}
+
+.nav{
+  display:flex;
+  gap:40px;
+}
+
+.menu-btn{
+  font-size:24px;
+  cursor:pointer;
+  display:none;
+}
+
+/* ================= MOBILE MENU ================= */
+.mobile-menu{
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:260px;
+  height:100vh;
+  background:#111;
+  color:#fff;
+  padding:40px 24px;
+  transition:var(--transition);
+  z-index:1000;
+}
+
+.mobile-menu.active{
+  right:0;
+}
+
+.mobile-menu a{
+  display:block;
+  margin-bottom:20px;
+  color:#fff;
+  text-decoration:none;
+  font-size:18px;
+}
+
+.close{
+  font-size:24px;
+  margin-bottom:30px;
+  cursor:pointer;
+}
+
+/* ================= HERO SLIDER ================= */
+.hero{
+  padding:32px;
+}
+
+.slider{
+  position:relative;
+  overflow:hidden;
+  border-radius:var(--radius);
+}
+
+.slides{
+  display:flex;
+  transition:transform 0.6s ease;
+}
+
+.slide{
+  min-width:100%;
+  position:relative;
+}
+
+.slide img{
+  width:100%;
+  height:420px;
+  object-fit:cover;
+}
+
+.slide-text{
+  position:absolute;
+  top:40px;
+  right:40px;
+  background:rgba(255,255,255,0.85);
+  padding:20px;
+  font-size:22px;
+  font-weight:bold;
+  max-width:260px;
+}
+
+/* ================= DOTS ================= */
+.dots{
+  position:absolute;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:12px;
+}
+
+.dot{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  border:1px solid #fff;
+  cursor:pointer;
+}
+
+.dot.active{
+  background:#fff;
+}
+
+/* ================= BOOK ================= */
+.book{
+  display:flex;
+  justify-content:flex-end;
+  padding:20px 32px;
+}
+
+.book button{
+  background:var(--gray);
+  border:none;
+  padding:10px 20px;
+  cursor:pointer;
+}
+
+/* ================= FEATURE ================= */
+.feature{
+  padding:40px 32px;
+  display:flex;
+  justify-content:center;
+}
+
+.feature img{
+  width:100%;
+  max-width:420px;
+  border-radius:var(--radius);
+}
+
+/* ================= BRANDS ================= */
+.brands{
+  background:#000;
+  color:#fff;
+  padding:40px 32px;
+}
+
+.brand-row{
+  display:flex;
+  gap:20px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.brand{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:2px solid #fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+}
+
+.view-brands{
+  margin-left:auto;
+  opacity:0.8;
+}
+
+/* ================= FOOTER ================= */
+footer{
+  padding:40px 32px;
+  border-top:1px solid #ddd;
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+}
+
+.socials{
+  display:flex;
+  gap:16px;
+}
+
+.social{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:2px solid #ccc;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.copy{
+  margin-top:20px;
+  text-align:center;
+  opacity:0.6;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width:768px){
+  .nav{display:none;}
+  .menu-btn{display:block;}
+
+  .slide img{height:300px;}
+  .slide-text{
+    position:static;
+    margin:20px auto;
+    text-align:center;
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  .socials{
+    justify-content:center;
+  }
+}
+
+@media (max-width:480px){
+  .slide img{height:240px;}
+  .brands{text-align:center;}
+  .brand-row{justify-content:center;}
+  .view-brands{
+    width:100%;
+    text-align:center;
+    margin-top:16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="close" onclick="toggleMenu()">✕</div>
+  <a href="#">Home</a>
+  <a href="#">Cars</a>
+  <a href="#">Bookings</a>
+  <a href="#">Contact</a>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Logo</div>
+  <div class="nav">
+    <span>Name</span>
+    <span>Name</span>
+  </div>
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+</header>
+
+<!-- HERO SLIDER -->
+<section class="hero">
+  <div class="slider">
+    <div class="slides" id="slides">
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a">
+        <div class="slide-text">Find a car<br>that suits<br>your style</div>
+      </div>
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1493238792000-8113da705763">
+        <div class="slide-text">Luxury<br>Performance<br>Comfort</div>
+      </div>
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1549924231-f129b911e442">
+        <div class="slide-text">Drive<br>Your<br>Dream</div>
+      </div>
+    </div>
+
+    <div class="dots" id="dots"></div>
+  </div>
+</section>
+
+<!-- BOOK -->
+<div class="book">
+  <button>Book →</button>
+</div>
+
+<!-- FEATURE -->
+<section class="feature">
+  <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70">
+</section>
+
+<!-- BRANDS -->
+<section class="brands">
+  <p>Brands</p>
+  <div class="brand-row">
+    <div class="brand">Ferrari</div>
+    <div class="brand">BMW</div>
+    <div class="brand">MB</div>
+    <div class="brand">Toyota</div>
+    <div class="brand">Ford</div>
+    <div class="brand">KIA</div>
+    <div class="view-brands">👁 View all brands</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <p>About us</p>
+      <p>About us</p>
+      <p>About us</p>
+    </div>
+    <div class="socials">
+      <div class="social">X</div>
+      <div class="social">f</div>
+      <div class="social">◎</div>
+      <div class="social">P</div>
+    </div>
+  </div>
+  <div class="copy">copyright</div>
+</footer>
+
+<script>
+/* ================= MOBILE MENU ================= */
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('active');
+}
+
+/* ================= SLIDER ================= */
+const slides = document.getElementById('slides');
+const dotsContainer = document.getElementById('dots');
+const totalSlides = slides.children.length;
+let index = 0;
+
+for(let i=0;i<totalSlides;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>goToSlide(i);
+  dotsContainer.appendChild(d);
+}
+
+function goToSlide(i){
+  index=i;
+  slides.style.transform=`translateX(-${index*100}%)`;
+  document.querySelectorAll('.dot').forEach((d,idx)=>{
+    d.classList.toggle('active', idx===index);
+  });
+}
+
+setInterval(()=>{
+  index=(index+1)%totalSlides;
+  goToSlide(index);
+},5000);
+</script>
+
+</body>
+</html>
